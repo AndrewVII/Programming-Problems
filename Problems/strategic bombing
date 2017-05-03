@@ -1,0 +1,46 @@
+correct = []
+o = []
+paths = {i: [] for i in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'}
+while 1:
+  a = list(input())
+  o.append(''.join(a))
+  if ''.join(a) == "**":
+    break
+  else:
+    paths[a[0]].append(a[1])
+    paths[a[1]].append(a[0])
+o.pop(-1)
+for i in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ':
+  s = ['A']
+  visited = {i: False for i in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'}
+  try:
+    cur = paths[i].pop(0)
+    paths[cur].remove(i)
+  except:
+    pass
+  while len(s) > 0:
+    current = s.pop(0)
+    if current == 'B':
+      break
+    elif current != 'B':
+      for x in paths[current]:
+        if not visited[x]:
+          s.append(x)
+          visited[x] = True
+  else:
+    curr = [cur, i]
+    curr = ''.join(curr)
+    curr2 = [i, cur]
+    curr2 = ''.join(curr2)
+    if curr in correct or curr2 in correct:
+      pass
+    elif curr in o:
+      correct.append(curr)
+    else:
+      correct.append(curr2)
+  paths[i].append(cur)
+  paths[cur].append(i)
+if len(correct) > 0:
+  for i in correct:
+    print(i)
+print('There are',len(correct),'disconnecting roads.')
