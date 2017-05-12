@@ -1,0 +1,35 @@
+import sys
+input = sys.stdin.readline
+n, m = map(int, input().split())
+students = {i: set() for i in range(1, n+1)}
+for i in range(m):
+    x, y = map(int, input().split())
+    students[x].add(y)
+p, q = map(int, input().split())
+s = [p]
+visited = [False for i in range(n+1)]
+while len(s) > 0:
+    current = s.pop(0)
+    if current == q:
+        print('yes')
+        break
+    elif current != q:
+        for x in students[current]:
+            if not visited[x]:
+                s.append(x)
+                visited[x] = True
+else:
+    s = [q]
+    visited = [False for i in range(n+1)]
+    while len(s) > 0:
+        current = s.pop(0)
+        if current == p:
+            print('no')
+            break
+        elif current != p:
+            for x in students[current]:
+                if not visited[x]:
+                    s.append(x)
+                    visited[x] = True
+    else:
+        print('unknown')
